@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komunitas Pecinta Sepak Bola</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+
+<h1>Komunitas Pecinta Sepak Bola</h1>
+
+<nav>
+
+<ul>
+<li><a href="index.html">Beranda</a></li>
+<li><a href="komunitas.html">Komunitas</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<section>
+
+<h2>Komunitas Pecinta Sepak Bola</h2>
+
+<p>
+Bergabung bersama kami dikomunitas pecinta sepak bola untuk berbagi pengalaman,
+berdiskusi mengenai klub favorit, dan menemukan teman yang memiliki hobi yang sama khususnya sepak Bola.
+</p>
+
+<form id="formKomunitas">
+
+<label>Nama Lengkap</label>
+
+<input
+type="text"
+id="nama"
+required
+minlength="3">
+
+<br><br>
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+required>
+
+<br><br>
+
+<label>Umur</label>
+
+<input
+type="number"
+id="umur"
+required
+min="10"
+max="80">
+
+<br><br>
+
+<label>Tim Favorit</label>
+
+<select id="tim" required>
+
+<option value="">-- Pilih Tim --</option>
+
+<option>FC Barcelona</option>
+
+<option>Real Madrid</option>
+
+<option>Manchester United</option>
+
+<option>Liverpool</option>
+
+<option>Arsenal</option>
+
+<option>Chelsea</option>
+
+<option>Bayern Munchen</option>
+
+<option>Inter Milan</option>
+
+<option>Persib Bandung</option>
+
+<option>Persija</option>
+
+<option>Arema FC</option>
+</select>
+
+<br><br>
+
+<label>Hobi Utama</label>
+
+<br>
+
+<input
+type="radio"
+name="hobi"
+value="Bermain Bola"
+required>
+
+Bermain Bola
+
+<br>
+
+<input
+type="radio"
+name="hobi"
+value="Tenis Meja">
+
+Tenis Meja
+
+<br>
+
+<input
+type="radio"
+name="hobi"
+value="Menonton Bola">
+
+Menonton Bola
+
+<br><br>
+
+<label>Alasan Bergabung</label>
+
+<textarea
+id="alasan"
+required
+minlength="10"
+rows="5"></textarea>
+
+<br><br>
+
+<button type="submit">
+
+Gabung Komunitas
+
+</button>
+
+<button type="button" onclick="hapusData()">
+
+Hapus Data
+
+</button>
+
+</form>
+
+</section>
+
+<section>
+
+<h2>Data Pendaftaran</h2>
+
+<div id="hasil">
+
+Belum ada data.
+
+</div>
+
+</section>
+
+<script>
+
+const form = document.getElementById("formKomunitas");
+
+const hasil = document.getElementById("hasil");
+
+window.onload=function(){
+
+const data=JSON.parse(localStorage.getItem("komunitas"));
+
+if(data){
+
+tampilkan(data);
+
+document.getElementById("nama").value=data.nama;
+
+document.getElementById("email").value=data.email;
+
+document.getElementById("umur").value=data.umur;
+
+document.getElementById("tim").value=data.tim;
+
+document.getElementById("alasan").value=data.alasan;
+
+document.querySelector(`input[name="hobi"][value="${data.hobi}"]`).checked=true;
+
+}
+
+}
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const data={
+
+nama:document.getElementById("nama").value,
+
+email:document.getElementById("email").value,
+
+umur:document.getElementById("umur").value,
+
+tim:document.getElementById("tim").value,
+
+hobi:document.querySelector('input[name="hobi"]:checked').value,
+
+alasan:document.getElementById("alasan").value
+
+};
+
+localStorage.setItem("komunitas",JSON.stringify(data));
+
+tampilkan(data);
+
+alert("Pendaftaran berhasil!");
+
+});
+
+function tampilkan(data){
+
+hasil.innerHTML=`
+
+<h3>Data Anda</h3>
+
+<p><b>Nama :</b> ${data.nama}</p>
+
+<p><b>Email :</b> ${data.email}</p>
+
+<p><b>Umur :</b> ${data.umur} Tahun</p>
+
+<p><b>Tim Favorit :</b> ${data.tim}</p>
+
+<p><b>Hobi :</b> ${data.hobi}</p>
+
+<p><b>Alasan :</b> ${data.alasan}</p>
+
+`;
+
+}
+
+function hapusData(){
+
+localStorage.removeItem("komunitas");
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+
+</html>
